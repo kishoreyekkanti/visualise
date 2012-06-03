@@ -1,0 +1,125 @@
+{
+ "name": "3 Years in ThoughtWorks",
+ "children": [
+  {
+   "name": "2009 June",
+   "children": [
+    {
+     "name": "S&P - Chennai",
+     "children": [
+      {"name": "Mysql", "size": 2000},
+      {"name": "Java", "size": 2000},
+      {"name": "Spring", "size": 3000},
+      {"name": "Hibernate", "size": 743},
+      {"name": "ExtJS", "size": 743},
+      {"name": "Jasper", "size": 743},
+      {"name": "SVN", "size": 743},
+      {"name": "Hudson", "size": 743}
+     ]
+    },
+    {"name": "HTML5 in Xconf", "size": 2000}
+   ]
+  },
+      {
+   "name": "2010 June",
+   "children": [
+    {"name": "Presented Android Geek weekend", "size": 2000},
+    {"name": "Node.js in Devcamp", "size": 2000},
+    {"name": "Android App development", "size": 2000},
+    {
+     "name": "Sears - Pune",
+     "children": [
+      {"name": "Mysql", "size": 2000},
+      {"name": "RubyOnRails", "size": 3000},
+      {"name": "git-svn", "size": 743},
+      {"name": "Hudson", "size": 743},
+      {"name": "Reporting", "size": 743}
+     ]
+    }
+   ]
+  },
+
+  {
+   "name": "2011 Jan to June",
+   "children": [
+    {"name": "NFC in Xconf", "size": 2000},
+    {
+     "name": "Rackspace - SanAntonio, Blacksburg",
+     "children": [
+      {"name": "Mysql", "size": 2000},
+      {"name": "Ruby", "size": 2000},
+      {"name": "Rails", "size": 3000},
+      {"name": "Java", "size": 743},
+      {"name": "Rackspace Cloud", "size": 743},
+      {"name": "Spring", "size": 743},
+      {"name": "Bamboo", "size": 2000},
+      {"name": "atom feed", "size": 743},
+      {"name": "Xconf", "size": 743}
+     ]
+    }
+   ]
+  },
+  {
+   "name": "2011 June - 2102 June",
+   "children": [
+    {"name": "Beach & Volunteer Programme", "size": 2000},
+    {"name": "Opensource SIP projects", "size": 2000},
+    {"name": "Codejams", "size": 2000},
+    {
+     "name": "SIP",
+     "children": [
+     {"name": "Training @ Makerere University, Uganda", "size": 2000},
+     {"name": "Ashoka Hub, Performance Analysis, RoR", "size": 2000},
+     {"name": "MercyCorps, YYC - Java,SMS,USSD", "size": 2000},
+     {"name": "RapidSMS, Unicef - SMS,USSD", "size": 2000},
+     {
+      "name": "OpenMRS - Rwanda",
+      "children": [
+      {"name": "Java", "size": 2000},
+      {"name": "Spring", "size": 2000},
+      {"name": "Hibernate", "size": 2000},
+      {"name": "Bamboo", "size": 2000},
+      {"name": "git-svn", "size": 2000},
+      {"name": "Jbehave", "size": 2000},
+      {"name": "Selenium", "size": 2000},
+      {"name": "gthub", "size": 2000},
+      {"name": "BDD", "size": 2000}
+      ]
+     },
+     {
+      "name": "Democracy Now!",
+      "children": [
+      {"name": "RoR", "size": 2000},
+      {"name": "HTML5", "size": 2000},
+      {"name": "getClicky", "size": 2000}
+      ]
+     },
+
+     {
+      "name": "RapidFTR - Uganda",
+      "children": [
+      {"name": "RoR", "size": 2000},
+      {"name": "Blackberry", "size": 2000},
+      {"name": "Android", "size": 2000},
+      {"name": "Chef", "size": 2000},
+      {"name": "Couchdb", "size": 2000}
+      ]
+     },
+     {
+      "name": "Camfed",
+      "children": [
+      {"name": "RoR", "size": 2000},
+      {"name": "EpiSurveyor", "size": 2000},
+      {"name": "Heroku", "size": 2000},
+      {"name": "Cron Jobs", "size": 2000},
+      {"name": "Redis", "size": 2000}
+      ]
+     }
+
+     ]
+    }
+   ]
+  }
+
+  ]
+}
