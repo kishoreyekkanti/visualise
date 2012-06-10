@@ -50,6 +50,7 @@ d3.json("experience.json", function(json) {
   json.x0 = 800;
   json.y0 = 0;
   update(root = json);
+  click(tree.nodes(root)[0]);
 });
 
 function update(source) {
@@ -131,6 +132,7 @@ function update(source) {
     d.x0 = d.x;
     d.y0 = d.y;
   });
+
 }
 
 // Toggle children on click.
@@ -146,7 +148,6 @@ function click(d) {
 }
 
 d3.select(self.frameElement).style("height", "2000px");
-
     </script>
   </body>
 </html>
