@@ -1,0 +1,31 @@
+<%=  @user_timeline_json %>
+<div id="container" style="height: 500px"></div>​
+
+<script>
+    $(document).ready(function() {
+            data = <%= raw @user_timeline_json %>
+            window.chart = new Highcharts.StockChart({
+                chart: {
+                    renderTo: 'container'
+                },
+
+                rangeSelector: {
+                    selected: 1
+                },
+
+                title: {
+                    text: 'Twitter Activity For ' + '<%= @screen_name%>'
+                },
+
+                series: [{
+                    name: 'Tweets',
+                    data: data,
+                    type: 'spline',
+                    tooltip: {
+                        valueDecimals: 2
+                    }
+                }]
+            });
+    });
+</script>
+

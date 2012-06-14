@@ -1,0 +1,28 @@
+base: &base
+ database_prefix: twitter_
+ database_suffix: _<%= Rails.env %>
+
+development:
+  host: localhost
+  port: 5984
+  <<: *base
+  
+test:
+  host: localhost
+  port: 5984
+  <<: *base
+
+cucumber:
+  host: localhost
+  port: 5984
+  <<: *base
+
+uat:
+  host: localhost
+  port: 5984
+  <<: *base
+
+production:
+  host: localhost
+  port: 5984
+  <<: *base
