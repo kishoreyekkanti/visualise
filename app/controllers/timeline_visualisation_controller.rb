@@ -7,10 +7,14 @@ class TimelineVisualisationController < ApplicationController
       rows = UserTimeline.by_screen_name.reduce.group_level(1).rows
       @user_timeline_json = []
       rows.each{ |row|
-      temp = [row["key"], row["value"]]
-      @user_timeline_json << temp
+      if row["key"] == params[:screen_name]
+        row["value"].keys.each do |key|
+          temp = [key, row["value"][key]]
+          @user_timeline_json << temp
+        end
+      end
       }
-
+    puts @user_timeline_json.inspect
     end
     respond_to do |format|
       format.html
