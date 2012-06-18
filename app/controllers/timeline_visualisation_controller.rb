@@ -4,7 +4,7 @@ class TimelineVisualisationController < ApplicationController
     @screen_name = params[:screen_name]
     if @screen_name
       UserTimeline.fetch_and_save(@screen_name)
-      rows = UserTimeline.by_screen_name.reduce.group_level(1).rows
+      rows = UserTimeline.by_tweet_created_at.reduce.group_level(1).rows
       @user_timeline_json = []
       rows.each{ |row|
       if row["key"] == params[:screen_name]

@@ -9,7 +9,8 @@ class UserTimeline < CouchRest::Model::Base
   timestamps!
   design do
     view :by_twitter_id
-    view :by_screen_name,
+    view :by_screen_name
+    view :by_tweet_created_at,
          :map =>
              "function(doc) {
               for(var i in doc.tweets){
@@ -58,7 +59,14 @@ class UserTimeline < CouchRest::Model::Base
       options.merge!({:max_id => timeline.last.attrs["id_str"]})
     end
     tweets = tweets.flatten
-    UserTimeline.new({:screen_name => screen_name, :tweets => tweets}).save
+    timeline_by_screen = UserTimeline.by_screen_name.key(screen_name)
+    if !timeline_by_screen.rows.empty?
+      user_time_line = UserTimeline.get(timeline_by_screen.rows.first.id)
+      user_time_line.tweets << tweets 
+    else
+      user_time_line = UserTimeline.new({:screen_name => screen_name, :tweets => tweets}).save
+    end 
+    user_time_line.save
   end
 
   def self.fetch_from_twitter(options)
