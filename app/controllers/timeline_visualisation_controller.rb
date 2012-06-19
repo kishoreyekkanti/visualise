@@ -9,7 +9,7 @@ class TimelineVisualisationController < ApplicationController
       rows.each{ |row|
       if row["key"] == params[:screen_name]
         row["value"].keys.each do |key|
-          temp = [key, row["value"][key]]
+          temp = [key.to_i, row["value"][key]]
           @user_timeline_json << temp
         end
       end

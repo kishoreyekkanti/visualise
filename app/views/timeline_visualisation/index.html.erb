@@ -1,16 +1,15 @@
 <%= form_tag tweets_visualise_path, :html => { :class => 'form-horizontal' }, :method => "post" do %>
   <fieldset>
-    <legend><%= controller.action_name.capitalize %> Product</legend>
+    <legend> Twitter time line visualisation</legend>
 
     <div class="control-group">
-      <%= label_tag( :screen_name)%>
+      <%= label_tag( "Screen name / Twitter handle")%>
       <div class="controls">
         <%= text_field_tag( :screen_name) %>
       </div>
     </div>
     <div class="form-actions">
       <%= submit_tag nil, :class => 'btn btn-primary' %>
-      <%= link_to 'Cancel', experience_path, :class => 'btn' %>
     </div>
   </fieldset>
 <% end %>
