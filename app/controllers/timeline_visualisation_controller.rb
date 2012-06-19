@@ -14,7 +14,6 @@ class TimelineVisualisationController < ApplicationController
         end
       end
       }
-    puts @user_timeline_json.inspect
     end
     respond_to do |format|
       format.html

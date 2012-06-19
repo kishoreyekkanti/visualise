@@ -3,7 +3,7 @@ class UserTimeline < CouchRest::Model::Base
   use_database :user_timeline
   property :screen_name
   property :tweet_created_at, Time
-  #property :tweet_text
+  property :tweet_text
   property :twitter_id
   property :tweets, {}
   timestamps!
@@ -52,6 +52,13 @@ class UserTimeline < CouchRest::Model::Base
   def self.fetch_and_save(screen_name)
     tweets = []
     options = {:screen_name => screen_name}
+    timeline_by_screen = UserTimeline.by_screen_name.key(screen_name)
+    if !timeline_by_screen.rows.empty?
+      user_time_line = UserTimeline.get(timeline_by_screen.rows.first.id)
+      since_id = user_time_line.tweets.first["tweet_id"]
+      options.merge!(:since_id => since_id)
+    end
+
     loop do
       timeline = fetch_from_twitter(options)
       tweets << transform_tweet(timeline)
@@ -59,10 +66,9 @@ class UserTimeline < CouchRest::Model::Base
       options.merge!({:max_id => timeline.last.attrs["id_str"]})
     end
     tweets = tweets.flatten
-    timeline_by_screen = UserTimeline.by_screen_name.key(screen_name)
+
     if !timeline_by_screen.rows.empty?
-      user_time_line = UserTimeline.get(timeline_by_screen.rows.first.id)
-      user_time_line.tweets << tweets 
+      user_time_line.tweets << tweets
     else
       user_time_line = UserTimeline.new({:screen_name => screen_name, :tweets => tweets}).save
     end 
