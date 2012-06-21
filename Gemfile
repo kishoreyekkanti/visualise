@@ -31,6 +31,9 @@ gem 'ruby-debug19'
 #gem "couchrest"
 gem 'couchrest_model'#, :git => "git://github.com/uniqsys/couchrest_model.git", :branch => "rails3.2"
 
+gem 'rspec-rails'
+
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

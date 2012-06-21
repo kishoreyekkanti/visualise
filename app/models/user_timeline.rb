@@ -7,6 +7,10 @@ class UserTimeline < CouchRest::Model::Base
   property :twitter_id
   property :tweets, {}
   timestamps!
+
+  validates_presence_of :screen_name
+  validates_uniqueness_of :screen_name
+
   design do
     view :by_twitter_id
     view :by_screen_name
@@ -53,9 +57,10 @@ class UserTimeline < CouchRest::Model::Base
     tweets = []
     options = {:screen_name => screen_name}
     timeline_by_screen = UserTimeline.by_screen_name.key(screen_name)
+
     if !timeline_by_screen.rows.empty?
-      user_time_line = UserTimeline.get(timeline_by_screen.rows.first.id)
-      since_id = user_time_line.tweets.first["tweet_id"]
+      user_timeline = UserTimeline.get(timeline_by_screen.rows.first.id)
+      since_id = user_timeline.tweets.first["tweet_id"]
       options.merge!(:since_id => since_id)
     end
 
@@ -68,11 +73,11 @@ class UserTimeline < CouchRest::Model::Base
     tweets = tweets.flatten
 
     if !timeline_by_screen.rows.empty?
-      user_time_line.tweets << tweets
+      user_timeline.tweets << tweets
     else
-      user_time_line = UserTimeline.new({:screen_name => screen_name, :tweets => tweets}).save
+      user_timeline = UserTimeline.new({:screen_name => screen_name, :tweets => tweets})
     end 
-    user_time_line.save
+    user_timeline.save
   end
 
   def self.fetch_from_twitter(options)

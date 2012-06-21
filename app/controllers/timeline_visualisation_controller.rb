@@ -1,8 +1,8 @@
 class TimelineVisualisationController < ApplicationController
 
   def visualise
-    @screen_name = params[:screen_name]
-    if @screen_name
+    begin
+      @screen_name = params[:screen_name]
       UserTimeline.fetch_and_save(@screen_name)
       rows = UserTimeline.by_tweet_created_at.reduce.group_level(1).rows
       @user_timeline_json = []
@@ -14,6 +14,10 @@ class TimelineVisualisationController < ApplicationController
         end
       end
       }
+    rescue => e
+      message = e.message.include?("NotFound")?"Screen name not found. Please try with a different screen name":"Twitter API is facing down time. Please visit after some time"
+      flash[:error] = message
+      redirect_to tweets_index_path and return
     end
     respond_to do |format|
       format.html
