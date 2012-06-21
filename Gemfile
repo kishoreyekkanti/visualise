@@ -27,7 +27,10 @@ end
 
 gem 'jquery-rails'
 gem 'twitter'
-gem 'ruby-debug19'
+group :development do
+  gem 'ruby-debug19'
+end
+
 #gem "couchrest"
 gem 'couchrest_model'#, :git => "git://github.com/uniqsys/couchrest_model.git", :branch => "rails3.2"
 
