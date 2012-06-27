@@ -60,4 +60,10 @@ development:
     # use_utc: false
 
 production:
-   uri: <%= ENV['MONGOLAB_URI'] %>
+  uri: <%= ENV['MONGOLAB_URI'] %>
+  sessions:
+    # Defines the default session. (required)
+    default:
+      # Defines the name of the default database that Mongoid can connect to.
+      # (required).
+      database: visualise_production
