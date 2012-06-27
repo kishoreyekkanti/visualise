@@ -13,7 +13,7 @@ class TimelineVisualisationController < ApplicationController
       }
 
     rescue => e
-      puts e.inspect
+      puts e.inspect, e.message
       message = e.message.include?("NotFound")?"Screen name not found. Please try with a different screen name":"Twitter API is facing down time. Please visit after some time"
       flash[:error] = message
       redirect_to tweets_index_path and return
