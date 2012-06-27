@@ -66,6 +66,6 @@ production:
     default:
       # Defines the name of the default database that Mongoid can connect to.
       # (required).
-      #database: visualise_<%= Rails.env %>
+      database: heroku_app4983378
       hosts:
         - ds033767.mongolab.com:33767
