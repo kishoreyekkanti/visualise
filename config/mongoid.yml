@@ -68,4 +68,4 @@ production:
       # (required).
       database: visualise_<%= Rails.env %>
       hosts:
-        - <%= ENV['MONGOLAB_URI'] %>
+        - v3per40f9t718o72it2r1ldil1@ds033767.mongolab.com:33767
