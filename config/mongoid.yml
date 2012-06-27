@@ -60,4 +60,4 @@ development:
     # use_utc: false
 
 production:
-  uri: <%= ENV['MONGOLAB_URI'] %>
+   uri: <%= ENV['MONGOLAB_URI'] %>
