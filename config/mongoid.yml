@@ -59,8 +59,8 @@ development:
     # Ensure all times are UTC in the app side. (default: false)
     # use_utc: false
 
-production: <%= ENV['MONGOLAB_URI'] %>
-#  uri: <%= ENV['MONGOLAB_URI'] %>
+production:
+  uri: <%= ENV['MONGOLAB_URI'] %>
 #  sessions:
 #    # Defines the default session. (required)
 #    default:
