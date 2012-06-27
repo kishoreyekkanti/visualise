@@ -1,51 +1,51 @@
 # encoding: utf-8
-class UserTimeline < CouchRest::Model::Base
-  use_database :user_timeline
-  property :screen_name
-  property :tweet_created_at, Time
-  property :tweet_text
-  property :twitter_id
-  property :tweets, {}
-  timestamps!
+class UserTimeline 
+  include Mongoid::Document
+  include Mongoid::Timestamps
+
+  field :screen_name
+  #field :tweet_created_at, type: Time
+  #field :tweet_text
+  #field :twitter_id
+  field :tweets, type: Array
 
   validates_presence_of :screen_name
-  validates_uniqueness_of :screen_name
+  #store_in collection: "user_timeline"
+  #validates_presence_of :screen_name
+  #validates_uniqueness_of :screen_name
 
-  design do
-    view :by_twitter_id
-    view :by_screen_name
-    view :by_tweet_created_at,
-         :map =>
-             "function(doc) {
-              for(var i in doc.tweets){
-                tweet = doc.tweets[i]
+  #design do
+  #  view :by_twitter_id
+  #  view :by_screen_name
+  #  view :by_tweet_created_at,
+         @map = <<-eos
+             function() {
+                for(var i in this.tweets){
+                tweet = this.tweets[i]
                 value = {}
                 tweet_date_time = new Date(tweet.tweet_created_at);
                 parsed_date =  Date.parse(new Date(tweet_date_time.getFullYear(), tweet_date_time.getMonth()))
                 value[parsed_date] = 1
-                emit(doc.screen_name, value)
+                emit(this.screen_name, value)
               }
-             }",
-         :reduce =>
-             "function(key, values, rereduce){
-                if(!rereduce){
-                var count = {}
-                for(var i in values){
-                  for(var id in values[i]){
-                  if(count[id]){
-                  count[id] = values[i][id] + count[id]
+             }
+            eos
+         @reduce = <<-eos
+             function(key, values){
+              var result = {};
+              for(var i in values){
+                for(var pd in values[i]){
+                  if(result[pd]){
+                    result[pd] = values[i][pd] + result[pd];
                   }else{
-                  count[id] = values[i][id]
+                    result[pd] = values[i][pd];
                   }
                 }
               }
-             return count
+              return result;
             }
-            else{
-            sum(values)
-            }
-          }"
-  end
+         eos
+  #end
 
   def self.transform_tweet(user_timeline)
     user_timeline.collect do |tweet|
@@ -54,30 +54,34 @@ class UserTimeline < CouchRest::Model::Base
   end
 
   def self.fetch_and_save(screen_name)
-    tweets = []
     options = {:screen_name => screen_name}
-    timeline_by_screen = UserTimeline.by_screen_name.key(screen_name)
+    timeline_by_screen = UserTimeline.where(:screen_name => screen_name).first
 
-    if !timeline_by_screen.rows.empty?
-      user_timeline = UserTimeline.get(timeline_by_screen.rows.first.id)
+    if timeline_by_screen.present?
+      user_timeline = UserTimeline.find_by(:screen_name => screen_name)
       since_id = user_timeline.tweets.first["tweet_id"]
       options.merge!(:since_id => since_id)
     end
 
+    tweets = load_tweets(options)
+
+    if !timeline_by_screen.present?
+      user_timeline = UserTimeline.new({:screen_name => screen_name, :tweets => tweets})
+    else
+      user_timeline.tweets << tweets
+    end
+    user_timeline.save
+  end
+
+  def self.load_tweets(options)
+    tweets = []
     loop do
       timeline = fetch_from_twitter(options)
       tweets << transform_tweet(timeline)
       break if timeline.empty? || timeline.length == 1
       options.merge!({:max_id => timeline.last.attrs["id_str"]})
     end
-    tweets = tweets.flatten
-
-    if !timeline_by_screen.rows.empty?
-      user_timeline.tweets << tweets
-    else
-      user_timeline = UserTimeline.new({:screen_name => screen_name, :tweets => tweets})
-    end 
-    user_timeline.save
+    tweets.flatten
   end
 
   def self.fetch_from_twitter(options)
@@ -89,4 +93,7 @@ class UserTimeline < CouchRest::Model::Base
     end
   end
 
+  def self.by_tweet_created_at(screen_name)
+    UserTimeline.where(:screen_name => screen_name ).map_reduce(@map, @reduce).out(inline: true)
+  end
 end

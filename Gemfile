@@ -32,8 +32,8 @@ group :development do
 end
 
 #gem "couchrest"
-gem 'couchrest_model'#, :git => "git://github.com/uniqsys/couchrest_model.git", :branch => "rails3.2"
-
+#gem 'couchrest_model'#, :git => "git://github.com/uniqsys/couchrest_model.git", :branch => "rails3.2"
+gem "mongoid", "~> 3.0.0.rc"
 gem 'rspec-rails'
 
 

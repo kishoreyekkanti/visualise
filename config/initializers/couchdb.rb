@@ -26,11 +26,11 @@
 #
 #else
 
-  COUCHDB_CONFIG = {
-    :host_path => "http://localhost:5984"
-    #:db_prefix => "#{db_prefix}",
-    #:db_suffix => "#{db_suffix}"
-  }
+  # COUCHDB_CONFIG = {
+  #   :host_path => "http://localhost:5984"
+  #   #:db_prefix => "#{db_prefix}",
+  #   #:db_suffix => "#{db_suffix}"
+  # }
 
-  COUCHDB_SERVER = CouchRest.new COUCHDB_CONFIG[:host_path]
+  # COUCHDB_SERVER = CouchRest.new COUCHDB_CONFIG[:host_path]
 #end
