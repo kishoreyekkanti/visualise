@@ -61,11 +61,11 @@ development:
 
 production:
   uri: <%= ENV['MONGOLAB_URI'] %>
-#  sessions:
-#    # Defines the default session. (required)
-#    default:
-#      # Defines the name of the default database that Mongoid can connect to.
-#      # (required).
-#      database: visualise_<%= Rails.env %>
-#      hosts:
-#        - v3per40f9t718o72it2r1ldil1@ds033767.mongolab.com:33767
+  sessions:
+    # Defines the default session. (required)
+    default:
+      # Defines the name of the default database that Mongoid can connect to.
+      # (required).
+      #database: visualise_<%= Rails.env %>
+      hosts:
+        - v3per40f9t718o72it2r1ldil1@ds033767.mongolab.com:33767
