@@ -4,48 +4,29 @@ class UserTimeline
   include Mongoid::Timestamps
 
   field :screen_name
-  #field :tweet_created_at, type: Time
-  #field :tweet_text
-  #field :twitter_id
   field :tweets, type: Array
-
   validates_presence_of :screen_name
-  #store_in collection: "user_timeline"
-  #validates_presence_of :screen_name
-  #validates_uniqueness_of :screen_name
 
-  #design do
-  #  view :by_twitter_id
-  #  view :by_screen_name
-  #  view :by_tweet_created_at,
          @map = <<-eos
              function() {
                 for(var i in this.tweets){
                 tweet = this.tweets[i]
-                value = {}
                 tweet_date_time = new Date(tweet.tweet_created_at);
                 parsed_date =  Date.parse(new Date(tweet_date_time.getFullYear(), tweet_date_time.getMonth()))
-                value[parsed_date] = 1
-                emit(this.screen_name, value)
+                if(!isNaN(parsed_date))
+                  emit(parsed_date,1)
               }
              }
             eos
          @reduce = <<-eos
              function(key, values){
-              var result = {};
-              for(var i in values){
-                for(var pd in values[i]){
-                  if(result[pd]){
-                    result[pd] = values[i][pd] + result[pd];
-                  }else{
-                    result[pd] = values[i][pd];
-                  }
-                }
+              var total = 0;
+              for(var i=0;i<values.length;i++){
+                total+=values[i];
               }
-              return result;
+              return total;
             }
          eos
-  #end
 
   def self.transform_tweet(user_timeline)
     user_timeline.collect do |tweet|

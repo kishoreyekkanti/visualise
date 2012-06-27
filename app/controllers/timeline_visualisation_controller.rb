@@ -4,23 +4,14 @@ class TimelineVisualisationController < ApplicationController
     begin
       @screen_name = params[:screen_name]
       UserTimeline.fetch_and_save(@screen_name)
-      tweet_timeline = UserTimeline.by_tweet_created_at(@screen_name).first
+      tweet_timeline = UserTimeline.by_tweet_created_at(@screen_name)
       @user_timeline_json = []
-      puts tweet_timeline, "TWEETTIMELINE"
-      tweet_timeline["value"].keys.each do |key|
-          unless key.to_i == 0
-            temp = [key.to_i, tweet_timeline["value"][key].to_i]
-            @user_timeline_json << temp
-          end
-      end
-      #rows.each{ |row|
-      #if row["key"] == params[:screen_name]
-      #  row["value"].keys.each do |key|
-      #    temp = [key.to_i, row["value"][key]]
-      #    @user_timeline_json << temp
-      #  end
-      #end
-      #}
+
+      tweet_timeline.each { |date_count_hash|
+        temp = [date_count_hash["_id"].to_i, date_count_hash["value"].to_i]
+        @user_timeline_json << temp
+      }
+
     rescue => e
       puts e.inspect
       message = e.message.include?("NotFound")?"Screen name not found. Please try with a different screen name":"Twitter API is facing down time. Please visit after some time"
