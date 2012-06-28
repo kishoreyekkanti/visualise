@@ -66,6 +66,6 @@ production:
     default:
       # Defines the name of the default database that Mongoid can connect to.
       # (required).
-      database: heroku_app4983378
+      database: heroku_app4983378:v3per40f9t718o72it2r1ldil1@ds033767.mongolab.com:33767
       hosts:
         - ds033767.mongolab.com:33767
