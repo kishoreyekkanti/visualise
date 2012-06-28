@@ -59,8 +59,8 @@ development:
    # Ensure all times are UTC in the app side. (default: false)
    # use_utc: false
 
-<% if ENV['MONGOLAB_URL'] %>
-  <% uri = URI.parse(ENV['MONGOLAB_URL']) %>
+<% if ENV['MONGOLAB_URI'] %>
+  <% uri = URI.parse(ENV['MONGOLAB_URI']) %>
 production:
   <<: *defaults
   sessions:
