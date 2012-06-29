@@ -27,6 +27,23 @@ class UserTimeline
               return total;
             }
          eos
+  scope :old_tweets, order_by(:created_at => :asc).only(:_id, :screen_name)
+
+  after_save do 
+    if ENV['MONGOLAB_URI']
+    uri = URI.parse(ENV['MONGOLAB_URI'])
+    db_size_hash = UserTimeline.mongo_session.command({dataSize: "#{uri.path.sub('/','')}.user_timelines"})
+    if db_size_hash["size"]/1000000 > 200
+      UserTimeline.old_tweets.each do |user_timeline|
+        if db_size_hash["size"]/1000000 > 200
+          user_timeline.delete
+        else
+          break
+        end    
+      end
+    end
+    end  
+  end
 
   def self.transform_tweet(user_timeline)
     user_timeline.collect do |tweet|
