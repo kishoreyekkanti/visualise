@@ -33,9 +33,9 @@ class UserTimeline
     if ENV['MONGOLAB_URI']
     uri = URI.parse(ENV['MONGOLAB_URI'])
     db_size_hash = UserTimeline.mongo_session.command({dataSize: "#{uri.path.sub('/','')}.user_timelines"})
-    if db_size_hash["size"]/1000000 > 200
+    if db_size_hash["size"]/1000000 > 1
       UserTimeline.old_tweets.each do |user_timeline|
-        if db_size_hash["size"]/1000000 > 200
+        if db_size_hash["size"]/1000000 > 1
           user_timeline.delete
         else
           break
